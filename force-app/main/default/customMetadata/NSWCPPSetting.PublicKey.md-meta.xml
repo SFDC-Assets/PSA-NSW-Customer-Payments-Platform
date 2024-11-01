@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Public Key</label>
+    <protected>false</protected>
+    <values>
+        <field>Category__c</field>
+        <value xsi:type="xsd:string">Completion</value>
+    </values>
+    <values>
+        <field>Value__c</field>
+        <value xsi:type="xsd:string">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuWngMS2WP3xV6TPf2thBmiIo7M76pdGbV2F3ofRi+/7x3am/g6h9ClqmauWwwbuV5tuon59OhxppWUmPxeMI+g/8SjcYqpAg4idcz5BzCZIJiP2Maq22aMs9KxDBdxsl6e4oQ5eCTw05q/d2oUNQWAjXt325yXrVS4wcc40DGIdIfZl0aC5nI81wFNqylYq4yCVlDz5WHopFEevQiGUwJzYO64KKEyUls0EEzY8NdSNE++0uBAm6nBUVi6JCJ8qbm9FyEi2zubagva6UOhnUpRTlHyHf/H9V1z/5MyJWgl5SaHuovqQpOe/sOD58bQ5Gj/XMj7jGOPbxZV75Qu7ZSwIDAQAB</value>
+    </values>
+</CustomMetadata>

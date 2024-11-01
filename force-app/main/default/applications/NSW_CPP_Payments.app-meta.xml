@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <content>NSW_CPP_Home</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>standard-home</pageOrSobjectType>
+    </actionOverrides>
+    <brand>
+        <headerColor>#0070D2</headerColor>
+        <logo>pay64</logo>
+        <logoVersion>1</logoVersion>
+        <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+    </brand>
+    <description>Manage payments made through the NSW Customer Payment Platform</description>
+    <formFactors>Small</formFactors>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <isOmniPinnedViewEnabled>false</isOmniPinnedViewEnabled>
+    <label>NSW CPP Payments</label>
+    <navType>Console</navType>
+    <tabs>standard-home</tabs>
+    <tabs>NSW_CPP_Payments_Summary</tabs>
+    <tabs>NSWCPPPayment__c</tabs>
+    <uiType>Lightning</uiType>
+    <utilityBar>NSW_CPP_Payments_UtilityBar</utilityBar>
+    <workspaceConfig>
+        <mappings>
+            <tab>NSWCPPPayment__c</tab>
+        </mappings>
+        <mappings>
+            <tab>NSW_CPP_Payments_Summary</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-home</tab>
+        </mappings>
+    </workspaceConfig>
+</CustomApplication>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>BPAY</fullName>
+        <default>false</default>
+        <label>BPay</label>
+    </customValue>
+    <customValue>
+        <fullName>CARD</fullName>
+        <default>false</default>
+        <label>Card</label>
+    </customValue>
+    <customValue>
+        <fullName>PAYID</fullName>
+        <default>false</default>
+        <label>PayID</label>
+    </customValue>
+    <customValue>
+        <fullName>PAYPAL</fullName>
+        <default>false</default>
+        <label>PayPal</label>
+    </customValue>
+    <masterLabel>NSW CPP Payment Method</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

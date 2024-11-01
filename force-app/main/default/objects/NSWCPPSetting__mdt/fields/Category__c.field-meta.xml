@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Category__c</fullName>
+    <businessStatus>Active</businessStatus>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <label>Category</label>
+    <required>true</required>
+    <securityClassification>Internal</securityClassification>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Callout</fullName>
+                <default>true</default>
+                <label>Callout</label>
+            </value>
+            <value>
+                <fullName>Completion</fullName>
+                <default>false</default>
+                <label>Completion</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Metadata used to associate a Salesforce domain name to a NSW CPP Calling System reference.</description>
+    <label>NSW CPP Calling System</label>
+    <pluralLabel>NSW CPP Calling Systems</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>
