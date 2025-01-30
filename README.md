@@ -10,7 +10,8 @@ The Accelerator comes with a data model to keep track of payment requests and th
 
 By adopting this Accelerator, NSW Government departments or contractors can significantly reduce the time, risk and effort required to perform payments by leveraging the NSW CPP from their Salesforce org.
 
-Accelerator Listing: [insert url to the public listing on the Accelerator site](https://gpsaccelerators.developer.salesforce.com/) (tbd once published)
+[Accelerator Listing](https://pubsec-accelerators.my.site.com/accelerators/accelerator/a0wDo0000024Nq6IAE/nsw-customer-payments-platform-cpp-integration)
+
 
 ## Description
 
