@@ -154,11 +154,11 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>NSW CPP Payment Step</label>
-    <pluralLabel>NSW CPP Payment Steps</pluralLabel>
     <nameField>
         <label>Name</label>
         <type>Text</type>
     </nameField>
+    <pluralLabel>NSW CPP Payment Steps</pluralLabel>
     <searchLayouts></searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Pending</fullName>
+    <fullName>Refund</fullName>
     <active>true</active>
-    <label>Pending</label>
+    <label>Refund</label>
     <picklistValues>
         <picklist>PaymentMethod__c</picklist>
         <values>
@@ -36,19 +36,19 @@
     <picklistValues>
         <picklist>Status__c</picklist>
         <values>
-            <fullName>Pending</fullName>
+            <fullName>Completed</fullName>
             <default>true</default>
+        </values>
+        <values>
+            <fullName>Failed</fullName>
+            <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>Type__c</picklist>
         <values>
-            <fullName>Payment</fullName>
-            <default>true</default>
-        </values>
-        <values>
             <fullName>Refund</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
     </picklistValues>
 </RecordType>

@@ -40,4 +40,15 @@
             <default>true</default>
         </values>
     </picklistValues>
+    <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>Payment</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Refund</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
 </RecordType>
