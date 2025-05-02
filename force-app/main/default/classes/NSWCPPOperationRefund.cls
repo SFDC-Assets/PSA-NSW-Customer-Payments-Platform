@@ -112,7 +112,7 @@ global without sharing class NSWCPPOperationRefund {
       * @param failureReason reason why the payment failed, or null when successful
       * @return Record Id of the associated payment step or null if there was no match.
       */
-    public static Id refundPayment(Id id, String amount, String refundReason, String refundReference, Boolean duplicate, String failureReason) {
+    public static Id refundPayment(Id id, Decimal amount, String refundReason, String refundReference, Boolean duplicate, String failureReason) {
         Request rq = new Request();
 
         rq.id = id;
