@@ -1,7 +1,7 @@
 {
   "name": "gps-se-apac-accelerator-nsw-cpp",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "NSW CPP Accelerator for Salesforce",
   "scripts": {
     "lint": "eslint **/{aura,lwc}/**/*.js",
