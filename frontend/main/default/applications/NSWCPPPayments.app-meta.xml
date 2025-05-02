@@ -2,7 +2,7 @@
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionOverrides>
         <actionName>Tab</actionName>
-        <content>NSW_CPP_Home</content>
+        <content>NSWCPPHome</content>
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
@@ -24,16 +24,16 @@
     <label>NSW CPP Payments</label>
     <navType>Console</navType>
     <tabs>standard-home</tabs>
-    <tabs>NSW_CPP_Payments_Summary</tabs>
+    <tabs>NSWCPPPaymentsSummary</tabs>
     <tabs>NSWCPPPayment__c</tabs>
     <uiType>Lightning</uiType>
-    <utilityBar>NSW_CPP_Payments_UtilityBar</utilityBar>
+    <utilityBar>NSWCPPPayments_UtilityBar</utilityBar>
     <workspaceConfig>
         <mappings>
             <tab>NSWCPPPayment__c</tab>
         </mappings>
         <mappings>
-            <tab>NSW_CPP_Payments_Summary</tab>
+            <tab>NSWCPPPaymentsSummary</tab>
         </mappings>
         <mappings>
             <tab>standard-home</tab>
