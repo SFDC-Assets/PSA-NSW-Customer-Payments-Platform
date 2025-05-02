@@ -25,7 +25,7 @@ private class NSWCPPSettings_Test {
         /* Perform tests */
         /* ------------- */
 
-        System.asserNottEquals(null, settings, 'There should be a map.');
+        System.assertNotEquals(null, settings, 'There should be a map.');
         System.assertEquals(0, settings.size(), 'There should be no entries.');
     }
 
