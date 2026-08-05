@@ -3,15 +3,19 @@
  * @author E. Schweitzer
  */
 
-/* TODO: Security Review by Paul Lucas
-    The following would be executed by the guest user
-    as a continuation of the Apex Rest service NSWCPPServicePaymentCompletion 
-    The guest user cannot be granted any user access rights anyway.
+/* 
+    The following would be executed by the guest user or an unprivileged user
+    as a result of a failed payment transaction; NSW CPP Gateway redirects to the
+    portal with the failed payment reference. 
+    The guest user cannot be granted any access rights anyway.
     This is a narrow-band, very controlled operation.
 */
 
 @SuppressWarnings('PMD.ApexCRUDViolation, PMD.AvoidGlobalModifier')
 global without sharing class NSWCPPOperationClose {
+    /**
+     * @description Request wrapper class for invocable method parameters
+     */
     public class Request {
         @InvocableVariable(label='Payment Reference' required=true)
         public String paymentReference;
@@ -20,7 +24,8 @@ global without sharing class NSWCPPOperationClose {
     /**
       * @description Invocable method that closes failed NSW CPP payments by payment reference
       *              and returns a list of the associated payment step recordId (or null if there 
-      *              was no match)
+      *              was no match). There is no risk that a close operation would affect multiple
+      *              payments as paymentReference is unique in the database.
       * @param pendingPayment a list of Requests containing payment references
       * @return a list of NSWCPPPaymentStep__c Ids or null if there was not payment reference match
       * @see NSWCPPOperationClose.Request
@@ -36,7 +41,7 @@ global without sharing class NSWCPPOperationClose {
         Set<String> prSet = new Set<String>();
 
         for (Request rq : pendingPayment) {
-            prSet.add(rq.paymentReference);
+            prSet.add(EncodingUtil.urlEncode(rq.paymentReference, 'UTF-8'));
         }
 
         List<NSWCPPPayment__c> cpList = [
@@ -101,7 +106,7 @@ global without sharing class NSWCPPOperationClose {
     /**
       * @description Closes a failed NSW CPP payment by payment reference
       *              and returns the associated payment step recordId (or null if there was no match)
-      * @param pendingPaymentReference The target payment reference
+      * @param paymentReference The target payment reference
       * @return The NSWCPPPaymentStep__c Id or null if there was not payment reference match
       */
     public static Id closePayment(String paymentReference) {

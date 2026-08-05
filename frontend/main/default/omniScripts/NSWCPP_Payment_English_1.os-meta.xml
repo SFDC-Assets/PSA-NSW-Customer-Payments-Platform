@@ -3,6 +3,7 @@
     <elementTypeComponentMapping>{&quot;ElementTypeToHTMLTemplateList&quot;:[]}</elementTypeComponentMapping>
     <isActive>true</isActive>
     <isIntegrationProcedure>false</isIntegrationProcedure>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
     <isMetadataCacheDisabled>false</isMetadataCacheDisabled>
     <isOmniScriptEmbeddable>false</isOmniScriptEmbeddable>
     <isTestProcedure>false</isTestProcedure>
@@ -13,13 +14,13 @@
         <isActive>true</isActive>
         <isOmniScriptEmbeddable>false</isOmniScriptEmbeddable>
         <level>0.0</level>
-        <name>GetUUID</name>
+        <name>InitCart</name>
         <omniProcessVersionNumber>0.0</omniProcessVersionNumber>
         <propertySetConfig>{
   &quot;controlWidth&quot; : 12,
-  &quot;label&quot; : &quot;Get UUID&quot;,
-  &quot;remoteClass&quot; : &quot;NSWCPPClientUtils&quot;,
-  &quot;remoteMethod&quot; : &quot;getUUID&quot;,
+  &quot;label&quot; : &quot;RemoteAction1&quot;,
+  &quot;remoteClass&quot; : &quot;NSWCPPSampleCart&quot;,
+  &quot;remoteMethod&quot; : &quot;order&quot;,
   &quot;remoteOptions&quot; : {
     &quot;preTransformBundle&quot; : &quot;&quot;,
     &quot;postTransformBundle&quot; : &quot;&quot;
@@ -29,72 +30,12 @@
   &quot;postTransformBundle&quot; : &quot;&quot;,
   &quot;sendJSONPath&quot; : &quot;&quot;,
   &quot;sendJSONNode&quot; : &quot;&quot;,
-  &quot;responseJSONPath&quot; : &quot;result&quot;,
-  &quot;responseJSONNode&quot; : &quot;Step1:agencyTransactionId&quot;,
-  &quot;extraPayload&quot; : { },
-  &quot;inProgressMessage&quot; : &quot;In Progress&quot;,
-  &quot;postMessage&quot; : &quot;Done&quot;,
-  &quot;failureNextLabel&quot; : &quot;Continue&quot;,
-  &quot;failureAbortLabel&quot; : &quot;Abort&quot;,
-  &quot;failureGoBackLabel&quot; : &quot;Go Back&quot;,
-  &quot;failureAbortMessage&quot; : &quot;Are you sure?&quot;,
-  &quot;validationRequired&quot; : &quot;Step&quot;,
-  &quot;redirectPageName&quot; : &quot;&quot;,
-  &quot;redirectTemplateUrl&quot; : &quot;vlcAcknowledge.html&quot;,
-  &quot;redirectNextLabel&quot; : &quot;Next&quot;,
-  &quot;redirectNextWidth&quot; : 3,
-  &quot;redirectPreviousLabel&quot; : &quot;Previous&quot;,
-  &quot;redirectPreviousWidth&quot; : 3,
-  &quot;showPersistentComponent&quot; : [ true, false ],
-  &quot;show&quot; : null,
-  &quot;HTMLTemplateId&quot; : &quot;&quot;,
-  &quot;wpm&quot; : false,
-  &quot;ssm&quot; : false,
-  &quot;message&quot; : { },
-  &quot;pubsub&quot; : false,
-  &quot;svgSprite&quot; : &quot;&quot;,
-  &quot;svgIcon&quot; : &quot;&quot;,
-  &quot;errorMessage&quot; : {
-    &quot;custom&quot; : [ ],
-    &quot;default&quot; : null
-  },
-  &quot;enableDefaultAbort&quot; : false,
-  &quot;enableActionMessage&quot; : false,
-  &quot;useContinuation&quot; : false,
-  &quot;businessCategory&quot; : &quot;&quot;,
-  &quot;businessEvent&quot; : &quot;&quot;,
-  &quot;sendOnlyExtraPayload&quot; : true
-}</propertySetConfig>
-        <sequenceNumber>0.0</sequenceNumber>
-        <type>Remote Action</type>
-    </omniProcessElements>
-    <omniProcessElements>
-        <isActive>true</isActive>
-        <isOmniScriptEmbeddable>false</isOmniScriptEmbeddable>
-        <level>0.0</level>
-        <name>InitiatePayment</name>
-        <omniProcessVersionNumber>0.0</omniProcessVersionNumber>
-        <propertySetConfig>{
-  &quot;controlWidth&quot; : 12,
-  &quot;label&quot; : &quot;Initiate Payment&quot;,
-  &quot;remoteClass&quot; : &quot;NSWCPPClientUtils&quot;,
-  &quot;remoteMethod&quot; : &quot;initiatePayment&quot;,
-  &quot;remoteOptions&quot; : {
-    &quot;preTransformBundle&quot; : &quot;&quot;,
-    &quot;postTransformBundle&quot; : &quot;&quot;
-  },
-  &quot;remoteTimeout&quot; : 30000,
-  &quot;preTransformBundle&quot; : &quot;&quot;,
-  &quot;postTransformBundle&quot; : &quot;&quot;,
-  &quot;sendJSONPath&quot; : &quot;&quot;,
-  &quot;sendJSONNode&quot; : &quot;&quot;,
-  &quot;responseJSONPath&quot; : &quot;result&quot;,
-  &quot;responseJSONNode&quot; : &quot;initiate&quot;,
+  &quot;responseJSONPath&quot; : &quot;&quot;,
+  &quot;responseJSONNode&quot; : &quot;InitCart&quot;,
   &quot;extraPayload&quot; : {
-    &quot;agencyTransactionId&quot; : &quot;%agencyTransactionId%&quot;,
-    &quot;amount&quot; : &quot;%amount%&quot;,
-    &quot;customerReference&quot; : &quot;%customerReference%&quot;,
-    &quot;productDescription&quot; : &quot;%productDescription%&quot;
+    &quot;units&quot; : &quot;%Units%&quot;,
+    &quot;service&quot; : &quot;%Service%&quot;,
+    &quot;customerReference&quot; : &quot;%CustomerReference%&quot;
   },
   &quot;inProgressMessage&quot; : &quot;In Progress&quot;,
   &quot;postMessage&quot; : &quot;Done&quot;,
@@ -129,7 +70,7 @@
   &quot;businessEvent&quot; : &quot;&quot;,
   &quot;sendOnlyExtraPayload&quot; : true
 }</propertySetConfig>
-        <sequenceNumber>2.0</sequenceNumber>
+        <sequenceNumber>1.0</sequenceNumber>
         <type>Remote Action</type>
     </omniProcessElements>
     <omniProcessElements>
@@ -162,137 +103,10 @@
   &quot;targetLWCLayout&quot; : &quot;lightning&quot;,
   &quot;businessCategory&quot; : &quot;&quot;,
   &quot;businessEvent&quot; : &quot;&quot;,
-  &quot;targetUrl&quot; : &quot;%paymentReference:nswCppPaymentURL%&quot;
+  &quot;targetUrl&quot; : &quot;%InitCart:nswCppPaymentURL%&quot;
 }</propertySetConfig>
-        <sequenceNumber>7.0</sequenceNumber>
+        <sequenceNumber>4.0</sequenceNumber>
         <type>Navigate Action</type>
-    </omniProcessElements>
-    <omniProcessElements>
-        <isActive>true</isActive>
-        <isOmniScriptEmbeddable>false</isOmniScriptEmbeddable>
-        <level>0.0</level>
-        <name>PendPayment</name>
-        <omniProcessVersionNumber>0.0</omniProcessVersionNumber>
-        <propertySetConfig>{
-  &quot;sendOnlyExtraPayload&quot; : true,
-  &quot;businessEvent&quot; : &quot;&quot;,
-  &quot;businessCategory&quot; : &quot;&quot;,
-  &quot;useContinuation&quot; : false,
-  &quot;enableActionMessage&quot; : false,
-  &quot;enableDefaultAbort&quot; : false,
-  &quot;errorMessage&quot; : {
-    &quot;default&quot; : null,
-    &quot;custom&quot; : [ ]
-  },
-  &quot;svgIcon&quot; : &quot;&quot;,
-  &quot;svgSprite&quot; : &quot;&quot;,
-  &quot;pubsub&quot; : false,
-  &quot;message&quot; : { },
-  &quot;ssm&quot; : false,
-  &quot;wpm&quot; : false,
-  &quot;HTMLTemplateId&quot; : &quot;&quot;,
-  &quot;show&quot; : null,
-  &quot;showPersistentComponent&quot; : [ true, false ],
-  &quot;redirectPreviousWidth&quot; : 3,
-  &quot;redirectPreviousLabel&quot; : &quot;Previous&quot;,
-  &quot;redirectNextWidth&quot; : 3,
-  &quot;redirectNextLabel&quot; : &quot;Next&quot;,
-  &quot;redirectTemplateUrl&quot; : &quot;vlcAcknowledge.html&quot;,
-  &quot;redirectPageName&quot; : &quot;&quot;,
-  &quot;validationRequired&quot; : &quot;Step&quot;,
-  &quot;failureAbortMessage&quot; : &quot;Are you sure?&quot;,
-  &quot;failureGoBackLabel&quot; : &quot;Go Back&quot;,
-  &quot;failureAbortLabel&quot; : &quot;Abort&quot;,
-  &quot;failureNextLabel&quot; : &quot;Continue&quot;,
-  &quot;postMessage&quot; : &quot;Done&quot;,
-  &quot;inProgressMessage&quot; : &quot;In Progress&quot;,
-  &quot;extraPayload&quot; : {
-    &quot;id&quot; : &quot;%initiate:id%&quot;,
-    &quot;paymentReference&quot; : &quot;%paymentReference:paymentReference%&quot;,
-    &quot;duplicate&quot; : &quot;%paymentReference:duplicate%&quot;
-  },
-  &quot;responseJSONNode&quot; : &quot;initiate&quot;,
-  &quot;responseJSONPath&quot; : &quot;result&quot;,
-  &quot;sendJSONNode&quot; : &quot;&quot;,
-  &quot;sendJSONPath&quot; : &quot;&quot;,
-  &quot;postTransformBundle&quot; : &quot;&quot;,
-  &quot;preTransformBundle&quot; : &quot;&quot;,
-  &quot;remoteTimeout&quot; : 30000,
-  &quot;remoteOptions&quot; : {
-    &quot;postTransformBundle&quot; : &quot;&quot;,
-    &quot;preTransformBundle&quot; : &quot;&quot;
-  },
-  &quot;remoteMethod&quot; : &quot;pendPayment&quot;,
-  &quot;remoteClass&quot; : &quot;NSWCPPClientUtils&quot;,
-  &quot;label&quot; : &quot;Pend Payment&quot;,
-  &quot;controlWidth&quot; : 12
-}</propertySetConfig>
-        <sequenceNumber>6.0</sequenceNumber>
-        <type>Remote Action</type>
-    </omniProcessElements>
-    <omniProcessElements>
-        <isActive>true</isActive>
-        <isOmniScriptEmbeddable>false</isOmniScriptEmbeddable>
-        <level>0.0</level>
-        <name>RequestPayment</name>
-        <omniProcessVersionNumber>0.0</omniProcessVersionNumber>
-        <propertySetConfig>{
-  &quot;controlWidth&quot; : 12,
-  &quot;label&quot; : &quot;Request Payment&quot;,
-  &quot;remoteClass&quot; : &quot;NSWCPPClientUtils&quot;,
-  &quot;remoteMethod&quot; : &quot;requestPayment&quot;,
-  &quot;remoteOptions&quot; : {
-    &quot;preTransformBundle&quot; : &quot;&quot;,
-    &quot;postTransformBundle&quot; : &quot;&quot;
-  },
-  &quot;remoteTimeout&quot; : 30000,
-  &quot;preTransformBundle&quot; : &quot;&quot;,
-  &quot;postTransformBundle&quot; : &quot;&quot;,
-  &quot;sendJSONPath&quot; : &quot;&quot;,
-  &quot;sendJSONNode&quot; : &quot;&quot;,
-  &quot;responseJSONPath&quot; : &quot;result&quot;,
-  &quot;responseJSONNode&quot; : &quot;paymentReference&quot;,
-  &quot;extraPayload&quot; : {
-    &quot;agencyTransactionId&quot; : &quot;%agencyTransactionId%&quot;,
-    &quot;amount&quot; : &quot;%amount%&quot;,
-    &quot;customerReference&quot; : &quot;%customerReference%&quot;,
-    &quot;productDescription&quot; : &quot;%productDescription%&quot;
-  },
-  &quot;inProgressMessage&quot; : &quot;In Progress&quot;,
-  &quot;postMessage&quot; : &quot;Done&quot;,
-  &quot;failureNextLabel&quot; : &quot;Continue&quot;,
-  &quot;failureAbortLabel&quot; : &quot;Abort&quot;,
-  &quot;failureGoBackLabel&quot; : &quot;Go Back&quot;,
-  &quot;failureAbortMessage&quot; : &quot;Are you sure?&quot;,
-  &quot;validationRequired&quot; : &quot;Step&quot;,
-  &quot;redirectPageName&quot; : &quot;&quot;,
-  &quot;redirectTemplateUrl&quot; : &quot;vlcAcknowledge.html&quot;,
-  &quot;redirectNextLabel&quot; : &quot;Next&quot;,
-  &quot;redirectNextWidth&quot; : 3,
-  &quot;redirectPreviousLabel&quot; : &quot;Previous&quot;,
-  &quot;redirectPreviousWidth&quot; : 3,
-  &quot;showPersistentComponent&quot; : [ true, false ],
-  &quot;show&quot; : null,
-  &quot;HTMLTemplateId&quot; : &quot;&quot;,
-  &quot;wpm&quot; : false,
-  &quot;ssm&quot; : false,
-  &quot;message&quot; : { },
-  &quot;pubsub&quot; : false,
-  &quot;svgSprite&quot; : &quot;&quot;,
-  &quot;svgIcon&quot; : &quot;&quot;,
-  &quot;errorMessage&quot; : {
-    &quot;custom&quot; : [ ],
-    &quot;default&quot; : null
-  },
-  &quot;enableDefaultAbort&quot; : false,
-  &quot;enableActionMessage&quot; : false,
-  &quot;useContinuation&quot; : false,
-  &quot;businessCategory&quot; : &quot;&quot;,
-  &quot;businessEvent&quot; : &quot;&quot;,
-  &quot;sendOnlyExtraPayload&quot; : true
-}</propertySetConfig>
-        <sequenceNumber>3.0</sequenceNumber>
-        <type>Remote Action</type>
     </omniProcessElements>
     <omniProcessElements>
         <isActive>true</isActive>
@@ -304,7 +118,7 @@
   &quot;controlWidth&quot; : 12,
   &quot;label&quot; : &quot;SetValues1&quot;,
   &quot;elementValueMap&quot; : {
-    &quot;paymentOK&quot; : &quot;=NOTEQUALS(%paymentReference:nswCppPaymentURL%, NULL)&quot;
+    &quot;paymentOK&quot; : &quot;=NOTEQUALS(%InitCart:nswCppPaymentURL%, NULL)&quot;
   },
   &quot;showPersistentComponent&quot; : [ true, false ],
   &quot;show&quot; : null,
@@ -314,7 +128,7 @@
   &quot;message&quot; : { },
   &quot;pubsub&quot; : false
 }</propertySetConfig>
-        <sequenceNumber>4.0</sequenceNumber>
+        <sequenceNumber>2.0</sequenceNumber>
         <type>Set Values</type>
     </omniProcessElements>
     <omniProcessElements>
@@ -322,18 +136,18 @@
             <isActive>true</isActive>
             <isOmniScriptEmbeddable>false</isOmniScriptEmbeddable>
             <level>1.0</level>
-            <name>agencyTransactionId</name>
+            <name>CustomerReference</name>
             <omniProcessVersionNumber>0.0</omniProcessVersionNumber>
             <propertySetConfig>{
   &quot;controlWidth&quot; : 12,
-  &quot;label&quot; : &quot;Agency transaction ID&quot;,
+  &quot;label&quot; : &quot;Your Reference&quot;,
   &quot;showInputWidth&quot; : false,
   &quot;inputWidth&quot; : 12,
-  &quot;required&quot; : true,
+  &quot;required&quot; : false,
   &quot;repeat&quot; : false,
   &quot;repeatClone&quot; : false,
   &quot;repeatLimit&quot; : null,
-  &quot;readOnly&quot; : true,
+  &quot;readOnly&quot; : false,
   &quot;defaultValue&quot; : null,
   &quot;help&quot; : false,
   &quot;helpText&quot; : &quot;&quot;,
@@ -352,82 +166,6 @@
   &quot;hide&quot; : false,
   &quot;disOnTplt&quot; : false,
   &quot;autocomplete&quot; : null
-}</propertySetConfig>
-            <sequenceNumber>1.0</sequenceNumber>
-            <type>Text</type>
-        </childElements>
-        <childElements>
-            <isActive>true</isActive>
-            <isOmniScriptEmbeddable>false</isOmniScriptEmbeddable>
-            <level>1.0</level>
-            <name>amount</name>
-            <omniProcessVersionNumber>0.0</omniProcessVersionNumber>
-            <propertySetConfig>{
-  &quot;controlWidth&quot; : 12,
-  &quot;label&quot; : &quot;Amount&quot;,
-  &quot;showInputWidth&quot; : false,
-  &quot;inputWidth&quot; : 12,
-  &quot;required&quot; : true,
-  &quot;repeat&quot; : false,
-  &quot;repeatClone&quot; : false,
-  &quot;repeatLimit&quot; : null,
-  &quot;readOnly&quot; : false,
-  &quot;defaultValue&quot; : null,
-  &quot;help&quot; : false,
-  &quot;helpText&quot; : &quot;&quot;,
-  &quot;helpTextPos&quot; : &quot;&quot;,
-  &quot;mask&quot; : null,
-  &quot;min&quot; : null,
-  &quot;max&quot; : null,
-  &quot;placeholder&quot; : &quot;&quot;,
-  &quot;allowNegative&quot; : false,
-  &quot;hideGroupSep&quot; : false,
-  &quot;show&quot; : null,
-  &quot;conditionType&quot; : &quot;Hide if False&quot;,
-  &quot;accessibleInFutureSteps&quot; : false,
-  &quot;debounceValue&quot; : 0,
-  &quot;HTMLTemplateId&quot; : &quot;&quot;,
-  &quot;hide&quot; : false,
-  &quot;disOnTplt&quot; : false,
-  &quot;displayCurrencyCode&quot; : false
-}</propertySetConfig>
-            <sequenceNumber>2.0</sequenceNumber>
-            <type>Currency</type>
-        </childElements>
-        <childElements>
-            <isActive>true</isActive>
-            <isOmniScriptEmbeddable>false</isOmniScriptEmbeddable>
-            <level>1.0</level>
-            <name>customerReference</name>
-            <omniProcessVersionNumber>0.0</omniProcessVersionNumber>
-            <propertySetConfig>{
-  &quot;autocomplete&quot; : null,
-  &quot;disOnTplt&quot; : false,
-  &quot;hide&quot; : false,
-  &quot;HTMLTemplateId&quot; : &quot;&quot;,
-  &quot;debounceValue&quot; : 0,
-  &quot;accessibleInFutureSteps&quot; : false,
-  &quot;conditionType&quot; : &quot;Hide if False&quot;,
-  &quot;show&quot; : null,
-  &quot;placeholder&quot; : &quot;&quot;,
-  &quot;maxLength&quot; : 255,
-  &quot;minLength&quot; : 0,
-  &quot;ptrnErrText&quot; : &quot;&quot;,
-  &quot;pattern&quot; : &quot;&quot;,
-  &quot;mask&quot; : &quot;&quot;,
-  &quot;helpTextPos&quot; : &quot;&quot;,
-  &quot;helpText&quot; : &quot;&quot;,
-  &quot;help&quot; : false,
-  &quot;defaultValue&quot; : null,
-  &quot;readOnly&quot; : false,
-  &quot;repeatLimit&quot; : null,
-  &quot;repeatClone&quot; : false,
-  &quot;repeat&quot; : false,
-  &quot;required&quot; : false,
-  &quot;inputWidth&quot; : 12,
-  &quot;showInputWidth&quot; : false,
-  &quot;label&quot; : &quot;Customer reference&quot;,
-  &quot;controlWidth&quot; : 12
 }</propertySetConfig>
             <sequenceNumber>3.0</sequenceNumber>
             <type>Text</type>
@@ -436,11 +174,59 @@
             <isActive>true</isActive>
             <isOmniScriptEmbeddable>false</isOmniScriptEmbeddable>
             <level>1.0</level>
-            <name>productDescription</name>
+            <name>Service</name>
+            <omniProcessVersionNumber>0.0</omniProcessVersionNumber>
+            <propertySetConfig>{
+  &quot;disOnTplt&quot; : false,
+  &quot;hide&quot; : false,
+  &quot;HTMLTemplateId&quot; : &quot;&quot;,
+  &quot;accessibleInFutureSteps&quot; : false,
+  &quot;conditionType&quot; : &quot;Hide if False&quot;,
+  &quot;show&quot; : null,
+  &quot;controllingField&quot; : {
+    &quot;source&quot; : &quot;&quot;,
+    &quot;type&quot; : &quot;&quot;,
+    &quot;element&quot; : &quot;&quot;
+  },
+  &quot;optionSource&quot; : {
+    &quot;source&quot; : &quot;&quot;,
+    &quot;type&quot; : &quot;&quot;
+  },
+  &quot;options&quot; : [ {
+    &quot;name&quot; : &quot;Individual&quot;,
+    &quot;value&quot; : &quot;Individual Paintball licence&quot;,
+    &quot;autoAdv&quot; : null
+  }, {
+    &quot;name&quot; : &quot;Venue&quot;,
+    &quot;value&quot; : &quot;Venue Paintball licence&quot;,
+    &quot;autoAdv&quot; : null
+  } ],
+  &quot;helpTextPos&quot; : &quot;&quot;,
+  &quot;helpText&quot; : &quot;&quot;,
+  &quot;help&quot; : false,
+  &quot;defaultValue&quot; : &quot;Individual&quot;,
+  &quot;readOnly&quot; : false,
+  &quot;repeatLimit&quot; : null,
+  &quot;repeatClone&quot; : false,
+  &quot;repeat&quot; : false,
+  &quot;required&quot; : true,
+  &quot;inputWidth&quot; : 12,
+  &quot;showInputWidth&quot; : false,
+  &quot;label&quot; : &quot;Service&quot;,
+  &quot;controlWidth&quot; : 12
+}</propertySetConfig>
+            <sequenceNumber>2.0</sequenceNumber>
+            <type>Select</type>
+        </childElements>
+        <childElements>
+            <isActive>true</isActive>
+            <isOmniScriptEmbeddable>false</isOmniScriptEmbeddable>
+            <level>1.0</level>
+            <name>Units</name>
             <omniProcessVersionNumber>0.0</omniProcessVersionNumber>
             <propertySetConfig>{
   &quot;controlWidth&quot; : 12,
-  &quot;label&quot; : &quot;Product description&quot;,
+  &quot;label&quot; : &quot;Units&quot;,
   &quot;showInputWidth&quot; : false,
   &quot;inputWidth&quot; : 12,
   &quot;required&quot; : true,
@@ -448,46 +234,69 @@
   &quot;repeatClone&quot; : false,
   &quot;repeatLimit&quot; : null,
   &quot;readOnly&quot; : false,
-  &quot;defaultValue&quot; : null,
+  &quot;defaultValue&quot; : &quot;1&quot;,
   &quot;help&quot; : false,
   &quot;helpText&quot; : &quot;&quot;,
   &quot;helpTextPos&quot; : &quot;&quot;,
-  &quot;mask&quot; : &quot;&quot;,
-  &quot;pattern&quot; : &quot;&quot;,
-  &quot;ptrnErrText&quot; : &quot;&quot;,
-  &quot;minLength&quot; : 0,
-  &quot;maxLength&quot; : 250,
-  &quot;placeholder&quot; : &quot;&quot;,
+  &quot;options&quot; : [ {
+    &quot;name&quot; : &quot;1&quot;,
+    &quot;value&quot; : &quot;1&quot;,
+    &quot;autoAdv&quot; : null
+  }, {
+    &quot;name&quot; : &quot;2&quot;,
+    &quot;value&quot; : &quot;2&quot;,
+    &quot;autoAdv&quot; : null
+  }, {
+    &quot;name&quot; : &quot;3&quot;,
+    &quot;value&quot; : &quot;3&quot;,
+    &quot;autoAdv&quot; : null
+  } ],
+  &quot;optionSource&quot; : {
+    &quot;type&quot; : &quot;&quot;,
+    &quot;source&quot; : &quot;&quot;
+  },
+  &quot;controllingField&quot; : {
+    &quot;element&quot; : &quot;&quot;,
+    &quot;type&quot; : &quot;&quot;,
+    &quot;source&quot; : &quot;&quot;
+  },
   &quot;show&quot; : null,
   &quot;conditionType&quot; : &quot;Hide if False&quot;,
   &quot;accessibleInFutureSteps&quot; : false,
-  &quot;debounceValue&quot; : 0,
   &quot;HTMLTemplateId&quot; : &quot;&quot;,
   &quot;hide&quot; : false,
-  &quot;disOnTplt&quot; : false,
-  &quot;autocomplete&quot; : null
+  &quot;disOnTplt&quot; : false
 }</propertySetConfig>
-            <sequenceNumber>4.0</sequenceNumber>
-            <type>Text</type>
+            <sequenceNumber>1.0</sequenceNumber>
+            <type>Select</type>
         </childElements>
         <childElements>
             <isActive>true</isActive>
             <isOmniScriptEmbeddable>false</isOmniScriptEmbeddable>
             <level>1.0</level>
-            <name>TextBlock2</name>
+            <name>Warning</name>
             <omniProcessVersionNumber>0.0</omniProcessVersionNumber>
             <propertySetConfig>{
   &quot;controlWidth&quot; : 12,
-  &quot;label&quot; : &quot;TextBlock2&quot;,
-  &quot;text&quot; : &quot;&lt;p&gt;In this front-end sample, we let you set the customer reference, amount due and product description. In real life, the last two would be pre-set based on a selection the user made previously or e.g. on the content of a shopping cart.&lt;/p&gt;&quot;,
+  &quot;label&quot; : &quot;Warning&quot;,
   &quot;show&quot; : null,
-  &quot;dataJSON&quot; : false,
-  &quot;HTMLTemplateId&quot; : &quot;&quot;,
-  &quot;textKey&quot; : &quot;&quot;,
-  &quot;sanitize&quot; : false
+  &quot;conditionType&quot; : &quot;Hide if False&quot;,
+  &quot;hide&quot; : false,
+  &quot;lwcName&quot; : &quot;sfGpsDsAuNswAlertCommOs&quot;,
+  &quot;bStandalone&quot; : true,
+  &quot;customAttributes&quot; : [ {
+    &quot;name&quot; : &quot;as&quot;,
+    &quot;source&quot; : &quot;info&quot;
+  }, {
+    &quot;name&quot; : &quot;title&quot;,
+    &quot;source&quot; : &quot;Only use as a sample&quot;
+  }, {
+    &quot;name&quot; : &quot;content&quot;,
+    &quot;source&quot; : &quot;In this front-end sample, we let you set the customer reference, amount due and product description. In real life, the last two would be pre-set based on a selection the user made previously or e.g. on the content of a shopping cart.&quot;
+  } ]
 }</propertySetConfig>
             <sequenceNumber>0.0</sequenceNumber>
-            <type>Text Block</type>
+            <type>Custom Lightning Web Component</type>
         </childElements>
         <isActive>true</isActive>
         <isOmniScriptEmbeddable>false</isOmniScriptEmbeddable>
@@ -538,7 +347,7 @@
   &quot;businessCategory&quot; : &quot;&quot;,
   &quot;businessEvent&quot; : &quot;&quot;
 }</propertySetConfig>
-        <sequenceNumber>1.0</sequenceNumber>
+        <sequenceNumber>0.0</sequenceNumber>
         <type>Step</type>
     </omniProcessElements>
     <omniProcessElements>
@@ -579,7 +388,7 @@
             <propertySetConfig>{
   &quot;controlWidth&quot; : 12,
   &quot;label&quot; : &quot;TextBlock1&quot;,
-  &quot;text&quot; : &quot;&lt;p&gt;URL: %paymentReference:nswCppPaymentURL%&lt;/p&gt;&quot;,
+  &quot;text&quot; : &quot;&lt;p&gt;URL: %InitCart:nswCppPaymentURL%&lt;/p&gt;&quot;,
   &quot;show&quot; : null,
   &quot;dataJSON&quot; : false,
   &quot;HTMLTemplateId&quot; : &quot;&quot;,
@@ -647,14 +456,14 @@
   &quot;businessCategory&quot; : &quot;&quot;,
   &quot;businessEvent&quot; : &quot;&quot;
 }</propertySetConfig>
-        <sequenceNumber>5.0</sequenceNumber>
+        <sequenceNumber>3.0</sequenceNumber>
         <type>Step</type>
     </omniProcessElements>
     <omniProcessType>OmniScript</omniProcessType>
-    <propertySetConfig>{&quot;persistentComponent&quot;:[{&quot;render&quot;:false,&quot;label&quot;:&quot;&quot;,&quot;remoteClass&quot;:&quot;&quot;,&quot;remoteMethod&quot;:&quot;&quot;,&quot;remoteTimeout&quot;:30000,&quot;remoteOptions&quot;:{&quot;preTransformBundle&quot;:&quot;&quot;,&quot;postTransformBundle&quot;:&quot;&quot;},&quot;preTransformBundle&quot;:&quot;&quot;,&quot;postTransformBundle&quot;:&quot;&quot;,&quot;sendJSONPath&quot;:&quot;&quot;,&quot;sendJSONNode&quot;:&quot;&quot;,&quot;responseJSONPath&quot;:&quot;&quot;,&quot;responseJSONNode&quot;:&quot;&quot;,&quot;id&quot;:&quot;vlcCart&quot;,&quot;itemsKey&quot;:&quot;cartItems&quot;,&quot;modalConfigurationSetting&quot;:{&quot;modalHTMLTemplateId&quot;:&quot;vlcProductConfig.html&quot;,&quot;modalController&quot;:&quot;ModalProductCtrl&quot;,&quot;modalSize&quot;:&quot;lg&quot;}},{&quot;render&quot;:false,&quot;dispOutsideOmni&quot;:false,&quot;label&quot;:&quot;&quot;,&quot;remoteClass&quot;:&quot;&quot;,&quot;remoteMethod&quot;:&quot;&quot;,&quot;remoteTimeout&quot;:30000,&quot;remoteOptions&quot;:{&quot;preTransformBundle&quot;:&quot;&quot;,&quot;postTransformBundle&quot;:&quot;&quot;},&quot;preTransformBundle&quot;:&quot;&quot;,&quot;postTransformBundle&quot;:&quot;&quot;,&quot;id&quot;:&quot;vlcKnowledge&quot;,&quot;itemsKey&quot;:&quot;knowledgeItems&quot;,&quot;modalConfigurationSetting&quot;:{&quot;modalHTMLTemplateId&quot;:&quot;&quot;,&quot;modalController&quot;:&quot;&quot;,&quot;modalSize&quot;:&quot;lg&quot;}}],&quot;allowSaveForLater&quot;:false,&quot;saveNameTemplate&quot;:null,&quot;saveExpireInDays&quot;:null,&quot;saveForLaterRedirectPageName&quot;:&quot;sflRedirect&quot;,&quot;saveForLaterRedirectTemplateUrl&quot;:&quot;vlcSaveForLaterAcknowledge.html&quot;,&quot;saveContentEncoded&quot;:false,&quot;saveObjectId&quot;:&quot;%ContextId%&quot;,&quot;saveURLPatterns&quot;:{},&quot;autoSaveOnStepNext&quot;:false,&quot;elementTypeToHTMLTemplateMapping&quot;:{},&quot;seedDataJSON&quot;:{},&quot;trackingCustomData&quot;:{},&quot;enableKnowledge&quot;:false,&quot;bLK&quot;:false,&quot;lkObjName&quot;:null,&quot;knowledgeArticleTypeQueryFieldsMap&quot;:{},&quot;timeTracking&quot;:false,&quot;hideStepChart&quot;:true,&quot;mergeSavedData&quot;:false,&quot;visualforcePagesAvailableInPreview&quot;:{},&quot;cancelType&quot;:&quot;SObject&quot;,&quot;allowCancel&quot;:true,&quot;cancelSource&quot;:&quot;%ContextId%&quot;,&quot;cancelRedirectPageName&quot;:&quot;OmniScriptCancelled&quot;,&quot;cancelRedirectTemplateUrl&quot;:&quot;vlcCancelled.html&quot;,&quot;consoleTabLabel&quot;:&quot;New&quot;,&quot;wpm&quot;:false,&quot;ssm&quot;:false,&quot;message&quot;:{},&quot;pubsub&quot;:false,&quot;autoFocus&quot;:false,&quot;currencyCode&quot;:&quot;&quot;,&quot;showInputWidth&quot;:false,&quot;rtpSeed&quot;:false,&quot;consoleTabTitle&quot;:null,&quot;consoleTabIcon&quot;:&quot;custom:custom18&quot;,&quot;errorMessage&quot;:{&quot;custom&quot;:[]},&quot;stylesheet&quot;:{&quot;newport&quot;:&quot;&quot;,&quot;lightning&quot;:&quot;&quot;,&quot;newportRtl&quot;:&quot;&quot;,&quot;lightningRtl&quot;:&quot;&quot;},&quot;stepChartPlacement&quot;:&quot;right&quot;,&quot;disableUnloadWarn&quot;:true,&quot;scrollBehavior&quot;:&quot;auto&quot;,&quot;currentLanguage&quot;:&quot;en_US&quot;,&quot;elementTypeToLwcTemplateMapping&quot;:{&quot;Currency&quot;:&quot;sfGpsDsAuNswFormCurrencyOsN&quot;,&quot;Text&quot;:&quot;sfGpsDsAuNswFormTextOsN&quot;,&quot;Step&quot;:&quot;sfGpsDsAuNswFormStepOsN&quot;}}</propertySetConfig>
+    <propertySetConfig>{&quot;persistentComponent&quot;:[{&quot;render&quot;:false,&quot;label&quot;:&quot;&quot;,&quot;remoteClass&quot;:&quot;&quot;,&quot;remoteMethod&quot;:&quot;&quot;,&quot;remoteTimeout&quot;:30000,&quot;remoteOptions&quot;:{&quot;preTransformBundle&quot;:&quot;&quot;,&quot;postTransformBundle&quot;:&quot;&quot;},&quot;preTransformBundle&quot;:&quot;&quot;,&quot;postTransformBundle&quot;:&quot;&quot;,&quot;sendJSONPath&quot;:&quot;&quot;,&quot;sendJSONNode&quot;:&quot;&quot;,&quot;responseJSONPath&quot;:&quot;&quot;,&quot;responseJSONNode&quot;:&quot;&quot;,&quot;id&quot;:&quot;vlcCart&quot;,&quot;itemsKey&quot;:&quot;cartItems&quot;,&quot;modalConfigurationSetting&quot;:{&quot;modalHTMLTemplateId&quot;:&quot;vlcProductConfig.html&quot;,&quot;modalController&quot;:&quot;ModalProductCtrl&quot;,&quot;modalSize&quot;:&quot;lg&quot;}},{&quot;render&quot;:false,&quot;dispOutsideOmni&quot;:false,&quot;label&quot;:&quot;&quot;,&quot;remoteClass&quot;:&quot;&quot;,&quot;remoteMethod&quot;:&quot;&quot;,&quot;remoteTimeout&quot;:30000,&quot;remoteOptions&quot;:{&quot;preTransformBundle&quot;:&quot;&quot;,&quot;postTransformBundle&quot;:&quot;&quot;},&quot;preTransformBundle&quot;:&quot;&quot;,&quot;postTransformBundle&quot;:&quot;&quot;,&quot;id&quot;:&quot;vlcKnowledge&quot;,&quot;itemsKey&quot;:&quot;knowledgeItems&quot;,&quot;modalConfigurationSetting&quot;:{&quot;modalHTMLTemplateId&quot;:&quot;&quot;,&quot;modalController&quot;:&quot;&quot;,&quot;modalSize&quot;:&quot;lg&quot;}}],&quot;allowSaveForLater&quot;:false,&quot;saveNameTemplate&quot;:null,&quot;saveExpireInDays&quot;:null,&quot;saveForLaterRedirectPageName&quot;:&quot;sflRedirect&quot;,&quot;saveForLaterRedirectTemplateUrl&quot;:&quot;vlcSaveForLaterAcknowledge.html&quot;,&quot;saveContentEncoded&quot;:false,&quot;saveObjectId&quot;:&quot;%ContextId%&quot;,&quot;saveURLPatterns&quot;:{},&quot;autoSaveOnStepNext&quot;:false,&quot;elementTypeToHTMLTemplateMapping&quot;:{},&quot;seedDataJSON&quot;:{},&quot;trackingCustomData&quot;:{},&quot;enableKnowledge&quot;:false,&quot;bLK&quot;:false,&quot;lkObjName&quot;:null,&quot;knowledgeArticleTypeQueryFieldsMap&quot;:{},&quot;timeTracking&quot;:false,&quot;hideStepChart&quot;:true,&quot;mergeSavedData&quot;:false,&quot;visualforcePagesAvailableInPreview&quot;:{},&quot;cancelType&quot;:&quot;SObject&quot;,&quot;allowCancel&quot;:true,&quot;cancelSource&quot;:&quot;%ContextId%&quot;,&quot;cancelRedirectPageName&quot;:&quot;OmniScriptCancelled&quot;,&quot;cancelRedirectTemplateUrl&quot;:&quot;vlcCancelled.html&quot;,&quot;consoleTabLabel&quot;:&quot;New&quot;,&quot;wpm&quot;:false,&quot;ssm&quot;:false,&quot;message&quot;:{},&quot;pubsub&quot;:false,&quot;autoFocus&quot;:false,&quot;currencyCode&quot;:&quot;&quot;,&quot;showInputWidth&quot;:false,&quot;rtpSeed&quot;:false,&quot;consoleTabTitle&quot;:null,&quot;consoleTabIcon&quot;:&quot;custom:custom18&quot;,&quot;errorMessage&quot;:{&quot;custom&quot;:[]},&quot;stylesheet&quot;:{&quot;newport&quot;:&quot;&quot;,&quot;lightning&quot;:&quot;&quot;,&quot;newportRtl&quot;:&quot;&quot;,&quot;lightningRtl&quot;:&quot;&quot;},&quot;stepChartPlacement&quot;:&quot;right&quot;,&quot;disableUnloadWarn&quot;:true,&quot;scrollBehavior&quot;:&quot;auto&quot;,&quot;currentLanguage&quot;:&quot;en_US&quot;,&quot;elementTypeToLwcTemplateMapping&quot;:{&quot;Currency&quot;:&quot;sfGpsDsAuNswFormCurrencyOsN&quot;,&quot;Text&quot;:&quot;sfGpsDsAuNswFormTextOsN&quot;,&quot;Step&quot;:&quot;sfGpsDsAuNswFormStepOsN&quot;,&quot;Select&quot;:&quot;sfGpsDsAuNswFormSelectOsN&quot;}}</propertySetConfig>
     <subType>Payment</subType>
     <type>NSWCPP</type>
     <uniqueName>NSWCPP_Payment_English_1</uniqueName>
     <versionNumber>1.0</versionNumber>
-    <webComponentKey>47b7b257-80bf-bdf5-83ee-8973506051ca</webComponentKey>
+    <webComponentKey>a3c8d907-e7e3-611c-1ad5-3aded401931d</webComponentKey>
 </OmniScript>

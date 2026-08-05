@@ -10,6 +10,8 @@ The Accelerator comes with a data model to keep track of payment requests and th
 
 By adopting this Accelerator, NSW Government departments or contractors can significantly reduce the time, risk and effort required to perform payments by leveraging the NSW CPP from their Salesforce org.
 
+However, the accelerator isn't a ready-to-use application: you must hence carefully review permissions and security in the context of your application, make sure they match your requirements and that abuse/exploit isn't possible.
+
 [Accelerator Listing](https://pubsec-accelerators.my.site.com/accelerators/accelerator/a0wDo0000024Nq6IAE/nsw-customer-payments-platform-cpp-integration)
 
 
@@ -39,14 +41,22 @@ At this stage, we have not tested NSWP CPP recurring payments even though the in
 
 ## Documentation
 
+### Foreword
+
+Newer versions of the accelerator improve capability, security, and aim at better showcasing usage scenarios. Review them carefully, adjust your own code base accordingly, removing dead code and adjusting settings accordingly. Make sure you subscribe to notifications on the repository for further updates.
+
 ### General Usage
 
 The two provided user experience examples for Flow and OmniStudio outline the suggested general workflow:
-* Create a unique Agency Transaction ID and assess the amount due, product description and customer reference; while these are captured as form editable fields in our examples, they should really be the byproduct of your solution's user experience prior to initiating a payment,
-* Use the `InitiatePayment` operation,
-* Use the `RequestPayment` operation (and handle eventual errors),
-* Use the `PendPayment` operation,
-* Redirect the user's browser to the Payment URL returned by NSW CPP as a result of `RequestPayment`,
+* Front-end code:
+  * Bring your own front-end code to constitute a shopping cart or let the user select products or services that will require payment.
+* Privileged back-end code:
+  * gererate a unique Agency Transaction ID, assess the amount due, product description and customer reference (the latter can be collected from the user if desired),
+  * use the `InitiatePayment` operation,
+  * use the `RequestPayment` operation (and handles eventual errors),
+  * use the `PendPayment` operation.
+* Front-end code:
+  * Redirect the user's browser to the Payment URL returned by NSW CPP as a result of `RequestPayment`,
 * Have two separate pages of your Experience Cloud site to handle successful and failed payments (whose URL you will need to share with NSW DCS GTP upon registration for NSW CPP):
   * On failure, use the `ClosePayment` operation, let the user know and perform any operation your solution requires to cancel the transaction or save it for later,
   * On success, let the user know and perform any operation your solution requires to finalise the transaction, including a back-end validation of the payment.
@@ -84,6 +94,8 @@ Extend the model as required to fit your needs. In particular, the provided NSW 
 In addition to holding the amount due (`Amount__c`), it also rolls-up the monies already paid (`AmountPaid__c`) from the related [`NSWCPPPaymentStep__c`](#nsw-cpp-payment-step) records and computes a balance (`Balance__c`).
 
 Checking that the balance is 0 or less validates that no further monies are due and the related transaction can proceed.
+
+`AgencyTransactionId` has been made unique for added security.
 
 #### NSW CPP Payment Step
 
@@ -124,11 +136,11 @@ REST call-outs to NSW CPP are implemented in Apex. The relevant classes include:
 
 ##### NSWCPPCalloutRefundPayment
 
-`NSWCPPCalloutRefundPayment` implements a REST call-out to the Get Refund Payment operation as documented by NSW CPP.
+`NSWCPPCalloutRefundPayment` implements a REST call-out to the Get Refund Payment operation as documented by NSW CPP. This capability must **ONLY** be accessible to privileged users authorised to process refunds. The refund workflow and securing access are not part of this accelerator's scope.
 
 ##### NSWCPPCalloutRequestPayment
 
-`NSWCPPCalloutRequestPayment` implements a REST call-out to the Request Payment operation as documented by NSW CPP.
+`NSWCPPCalloutRequestPayment` implements a REST call-out to the Request Payment operation as documented by NSW CPP. This must be performed from the server-side in a way that's opaque for the end-user when performing portal payments.
 
 #### Call-ins / Apex REST Services
 
@@ -141,7 +153,7 @@ There is a single call-in/callback from NSW CPP when it confirms payment complet
 This is a JWS (JSON Web Signature, also known as signed JWT) as per the NSW CPP specifications for the payment completion service.
 
 It verifies the token signature and leverages the `completePayment` method as outlined in the [`NSWCPPOperationComplete`](#nswcppoperationcomplete) class 
-documentation to handle payment completion.
+documentation to handle payment completion. The JWS validation ensures that only the NSW CPP can invoke this endpoint.
 
 #### Persistence and auditability
 
@@ -158,8 +170,10 @@ This is a base class used by all operations. It only contains an enumeration of 
 
 #### NSWCPPOperationClose
 
-`NSWCPPOperationClose` is meant to be performed from the front-end. A request for this operation will include the following attributes:
-* `paymentReference` (required), the payment reference returned by NSW CPP when requesting payment
+`NSWCPPOperationClose` is meant to be initiated from the front-end when a payment transaction fails. The paymentReference is received by the front-end as a result of a HTTP redirection by the NSW CPP Gateway. 
+
+A request for this operation must include the following attributes:
+* `paymentReference` (required), the payment reference returned by NSW CPP as part of it's HTTP redirect (which aligns with the reference received when requesting payment initially).
 
 It will return a `NSWCPPPaymentStep__c` record Id if the operation was successful.
 
@@ -169,13 +183,15 @@ It will return a `NSWCPPPaymentStep__c` record Id if the operation was successfu
 
 `completePayment` sequences all the steps required to register a payment completion: 
 * grab the NSW CPP public key from our settings,
-* validate the JWS signature,
+* validate the JWS signature (ensuring only NSW CPP is able to invoke this endpoint),
 * find a `NSWCPPPaymentStep__c` record matching the payment reference with `Status__c` set to `Pending`,
 * create a `NSWCPPPaymentStep__c` record with `Status__c` set to `Completed` -- the whole JWS payload is persisted in the `Payload__c` field.
 
 #### NSWCPPOperationInitiate
 
-`NSWCPPOperationInitiate` is meant to be performed from the front-end. A request for this operation will include the following attributes:
+`NSWCPPOperationInitiate` is meant to be performed as a result of customer activity requiring a payment. The operation itself should only happen on server-side as a side-effect of that activity.
+
+A request for this operation will include the following attributes:
 * `agencyTransactionId` (required),
 * `amount` (required),
 * `productDescription` (required),
@@ -183,14 +199,35 @@ It will return a `NSWCPPPaymentStep__c` record Id if the operation was successfu
 * `accountToken`, which needs to be provided when `setupRecurringPayment` is true,
 * `setupRecurringPayment`, which defaults to false -- knowing that the Accelerator does not support recurring payments yet.
 
+These data points, apart from the customer reference, must **NOT** be settable from the front-end. Only the `amount`, `productDescription` and `customerReference` are meant to be visible on the front-end.
+
 It will return a `NSWCPPPaymentStep__c` record Id if the operation was successful.
 
 #### NSWCPPOperationPend
 
-`NSWCPPOperationPend` is meant to be performed from the front-end after having requested payment from NSW CPP. A request for this operation will include the following attributes:
+`NSWCPPOperationPend` is meant to be performed from the server-side after having requested payment from NSW CPP or right after (if practical to avoid having a pending DML in the way of the request payment callout).
+
+A request for this operation must include the following attributes:
 * `id` (required), the NSWCPPPayment__c record Id of the payment to pend,
 * `paymentReference` (required), the payment reference as return when requesting payment from NSW CPP,
 * `duplicate` (required), the value of the duplicate flag as returned when requesting payment from NSW CPP
+
+These data points must **NOT** be settable from the front-end.
+
+### Permission Sets
+
+We ship two distinct permission sets:
+* `NSWCPPUser`, which is meant for privileged internal users managing payments - content of the permission set have changed in V1.1,
+* `NSWCPPSampleEndUser`, which is an **illustration** of the setup of payment end-users including the guest user for anonymous payments. Do review and adjust based on your needs.
+
+Callouts to the NSW CPP Gateway require access to the associated Named Credentials and executing operations `without sharing` so as not to expose privileged records to end users and keep access tightly controlled. It's absolutely **crucial** that you carefully review what Apex code end users have access to as overprivilege may have dramatic consequences. 
+
+If you have Omnistudio enabled on your org, you will want to be even more careful as any code that is `System.Callable` that users have access to can potentially be invoked using developer tools on the browser, even when not `@AuraEnabled`. `@InvocableMethods` are safer, as they can only be executed from
+an Integration Procedure or Flow that will be server-side.
+
+End users must **not** have API access enabled.
+
+We haven't included refund processing in any of these in abundance of precaution. Refund processes and their security are not in scope for this accelerator. 
 
 ### Configurability
 
@@ -252,11 +289,11 @@ This Accelerator includes the following assets:
 <ol>
   <li>An <strong>unmanaged package</strong> for the Salesforce back-end (link below; metadata is also found in the `/force-app/main/default/` folder) that includes:
     <ul>
-      <li>Apex classes, including test classes (x23)</li>
+      <li>Apex classes, including test classes (x24)</li>
       <li>Custom apps and associated flexipages (x1)</li>
       <li>Custom metadata objects (x2)</li>
       <li>Custom objects (x2)</li>
-      <li>Permission sets (x1)</li>
+      <li>Permission sets (x2)</li>
       <li>Reports (x4, as blueprints)</li>
     </ul>
   </li>
@@ -298,12 +335,9 @@ If you do not have a Salesforce org licensed to you, you may try Public Sector S
 
 ## Installation
 
-[Required. Steps necessary for installing the Accelerator. This can include images/screenshots which must be stored in the /docs/ folder (no external images or images stored elsewhere in the repository).]
-
+Installation of this accelerator is source-code, metadata push only. Subscribe to this repo to be notified of future updates.
 
 ## Post-Install Setup & Configuration
-
-[Required. Steps necessary for using the Accelerator. This can include images/screenshots which must be stored in the /docs/ folder - no external images or images stored elsewhere in the repository.]
 
 #### Credentials
 
@@ -342,7 +376,6 @@ Create a new Named Credentials record for access to the NSW CPP test service as 
 
 Create one record per Experience Cloud site where you plan on using this Accelerator:
 1. In Salesforce Setup, navigated to `Setup` > `Custom Code` > `Custom Metadata Types`. Locate the `NSW CPP Calling Systems` Metadata Type and click on the `Manage Records` link.
-1. x
 1. Pick a Name and Label,
 1. Set Network to the name of your target Experience Cloud site as per 
 1. Set the Named Credentials field to the Name of the Named Credentials record you created above,
@@ -350,16 +383,10 @@ Create one record per Experience Cloud site where you plan on using this Acceler
 
 By doing this, the Accelerator will automatically associate the right Named Credentials when authenticating with NSW CPP to perform a payment callout
 
-
-## Additional Resources
-
-[Optional. Summary list of additional links and references that you think are useful to. These links should be restricted to official Salesforce web resources and should not include third party references. Use an unordered list.]
-
-
 ## Revision History
 
 <strong>1.0 Initial release (1 Nov 2024)</strong> - Integration logic for NSW CPP and User Experience blueprints for OmniStudio and Flow.
-
+<strong>1.1 (5 Aug 2026)</strong> - Alterations to better catch error cases to would make the gateway fail with an error. Improved documentation and samples to better showcase secure usage. There are significant changes to permission sets, do review thoroughly for impact.
 
 ## Acknowledgements
 

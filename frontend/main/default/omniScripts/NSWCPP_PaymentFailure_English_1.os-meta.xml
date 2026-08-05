@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <OmniScript xmlns="http://soap.sforce.com/2006/04/metadata">
     <elementTypeComponentMapping>{&quot;ElementTypeToHTMLTemplateList&quot;:[]}</elementTypeComponentMapping>
-    <isActive>true</isActive>
+    <isActive>false</isActive>
     <isIntegrationProcedure>false</isIntegrationProcedure>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
     <isMetadataCacheDisabled>false</isMetadataCacheDisabled>
     <isOmniScriptEmbeddable>false</isOmniScriptEmbeddable>
     <isTestProcedure>false</isTestProcedure>
@@ -18,7 +19,7 @@
         <propertySetConfig>{
   &quot;controlWidth&quot; : 12,
   &quot;label&quot; : &quot;ClosePayment&quot;,
-  &quot;remoteClass&quot; : &quot;NSWCPPClientUtils&quot;,
+  &quot;remoteClass&quot; : &quot;NSWCPPSampleCart&quot;,
   &quot;remoteMethod&quot; : &quot;closePayment&quot;,
   &quot;remoteOptions&quot; : {
     &quot;preTransformBundle&quot; : &quot;&quot;,

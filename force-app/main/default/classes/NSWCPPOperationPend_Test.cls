@@ -1,11 +1,11 @@
-@isTest
+@IsTest
 private class NSWCPPOperationPend_Test {
 
     static String refForNumber(String stub, Integer i) {
         return stub + '_' + String.valueOf(i);
     }
 
-    @isTest
+    @IsTest
     static void mustPendLegitimateOperationCorrectly() {
         final String stub = 'MyUniquePaymentReference_' + System.now().getTime();
         final Integer numberRecords = 5;
@@ -101,7 +101,7 @@ private class NSWCPPOperationPend_Test {
         }
     }
 
-    @isTest
+    @IsTest
     static void mustReturnNullWhenPaymentIsUnknown() {
         final String paymentReference = 'MyUniquePaymentReference_' + System.now().getTime();
 
@@ -127,7 +127,7 @@ private class NSWCPPOperationPend_Test {
         System.assertEquals(null, nullId, 'Pending unknown record should return null id');
     }
 
-    @isTest
+    @IsTest
     static void mustReturnNullWhenPaymentIsNotInitiated() {
         final String paymentReference = 'MyUniquePaymentReference_' + System.now().getTime();
 
@@ -140,6 +140,30 @@ private class NSWCPPOperationPend_Test {
         insert payment;
 
         Id nullId = NSWCPPOperationPend.pendPayment(payment.Id, paymentReference, false);
+        Test.stopTest();
+
+        System.assertEquals(null, nullId, 'Pending payment that is not initiated should return null id');
+    }
+
+    @IsTest
+    static void mustReturnNullWhenPaymentRefIsNotRight() {
+        // Payment reference is too long on purpose
+        final String paymentReference1 = 'MyUniquePaymentReference_123456789012345678901234567890';
+        final String paymentReference2 = paymentReference1 +
+            '123456789012345678901234567890123456789012345678901234567890' +
+            '123456789012345678901234567890123456789012345678901234567890' +
+            '123456789012345678901234567890123456789012345678901234567890' +
+            '123456789012345678901234567890123456789012345678901234567890';
+
+        Test.startTest();
+        NSWCPPPayment__c payment = new NSWCPPPayment__c(
+            Status__c = NSWCPPOperation.STATUS_COMPLETED,
+            PaymentReference__c = paymentReference1
+        );
+
+        insert payment;
+
+        Id nullId = NSWCPPOperationPend.pendPayment(payment.Id, paymentReference2, false);
         Test.stopTest();
 
         System.assertEquals(null, nullId, 'Pending payment that is not initiated should return null id');

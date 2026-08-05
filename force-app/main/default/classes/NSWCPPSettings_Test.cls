@@ -1,9 +1,9 @@
-@isTest
+@IsTest
 private class NSWCPPSettings_Test {
     final static String SETTINGS_CATEGORY_COMPLETION = 'Completion';
     final static String SETTINGS_PUBLICKEY = 'PublicKey';
 
-    @isTest
+    @IsTest
     static void itReturnsACategoryIfItExists() {
         Test.startTest();
         Map<String, String> settings = NSWCPPSettings.getSettingsMapForCategory(SETTINGS_CATEGORY_COMPLETION);
@@ -16,7 +16,7 @@ private class NSWCPPSettings_Test {
         System.assertNotEquals(0, settings.size(), 'There should be entries.');
     }
 
-    @isTest
+    @IsTest
     static void itReturnsNullIfCategoryDoesNotExist() {
         Test.startTest();
         Map<String, String> settings = NSWCPPSettings.getSettingsMapForCategory('Random123');
@@ -29,7 +29,7 @@ private class NSWCPPSettings_Test {
         System.assertEquals(0, settings.size(), 'There should be no entries.');
     }
 
-    @isTest
+    @IsTest
     static void itReturnsValueWhenSet() {
         Test.startTest();
         Map<String, String> settings = NSWCPPSettings.getSettingsMapForCategory(SETTINGS_CATEGORY_COMPLETION);
@@ -43,7 +43,7 @@ private class NSWCPPSettings_Test {
         System.assertNotEquals(null, value, 'There should be a value for ' + SETTINGS_PUBLICKEY);
     }
 
-    @isTest
+    @IsTest
     static void itReturnsNoValueWhenNoSet() {
         Test.startTest();
         String value = NSWCPPSettings.getSettingSingle('RANDOM.123');

@@ -4,15 +4,19 @@
  * @author E. Schweitzer
  */
 
-/* TODO: Security Review by Paul Lucas
-    The following would be executed by the guest user
-    as a continuation of the Apex Rest service NSWCPPServicePaymentCompletion 
-    The guest user cannot be granted any user access rights anyway.
+/*
+    The following could be executed by the guest user or an unprivileged user
     This is a narrow-band, very controlled operation.
+    Do not expose to the front-end, use only as a side-effect of back-end activity in an opaque way.
+    Only the customerReference is meant to be collected from the end-user (optionally).
+    Only the amount and productDescription can be exposed to end-users as read-only.
 */
 
 @SuppressWarnings('PMD.ApexCRUDViolation, PMD.AvoidGlobalModifier, PMD.ExcessiveParameterList')
 global without sharing class NSWCPPOperationInitiate {
+    /**
+     * @description Request class for payment initiation containing payment details
+     */
     public class Request {
         @InvocableVariable(label='Agency Transaction ID' required=true)
         public String agencyTransactionId;
@@ -42,8 +46,12 @@ global without sharing class NSWCPPOperationInitiate {
     )
     public static List<Id> initiatePayment(List<Request> payment) {
         Id cpsRecordTypeId = NSWCPPOperation.getRecordTypeIdByName(NSWCPPOperation.STATUS_INITIATED);
+        List<Id> rv = new List<Id>();
 
         List<NSWCPPPayment__c> cpList = new List<NSWCPPPayment__c>();
+        List<Integer> requestIndex = new List<Integer>();
+        Integer index = 0;
+
         for (Request item : payment) {
             Boolean srp = item.setupRecurringPayment;
 
@@ -51,26 +59,44 @@ global without sharing class NSWCPPOperationInitiate {
                 srp = false;
             }
 
-            cpList.add(
-                new NSWCPPPayment__c(
-                    Name = item.agencyTransactionId,
-                    AgencyTransactionID__c = item.agencyTransactionId,
-                    Amount__c = item.amount,
-                    ProductDescription__c = item.productDescription,
-                    CustomerReference__c = item.customerReference,
-                    AccountToken__c = item.accountToken,
-                    SetupRecurringPayment__c = srp ? 'Yes' : 'No',
-                    Status__c = NSWCPPOperation.STATUS_INITIATED
-                )
-            );
+            if (
+                item.amount > 0 &&
+                (item.agencyTransactionId == null || item.agencyTransactionId.length() < 255) &&
+                (item.productDescription == null || item.productDescription.length() < 255) &&
+                (item.customerReference == null || item.customerReference.length() < 64)
+            ) {
+                cpList.add(
+                    new NSWCPPPayment__c(
+                        Name = item.agencyTransactionId != null ? item.agencyTransactionId.abbreviate(80) : null,
+                        AgencyTransactionID__c = item.agencyTransactionId,
+                        Amount__c = item.amount,
+                        ProductDescription__c = item.productDescription,
+                        CustomerReference__c = item.customerReference,
+                        AccountToken__c = item.accountToken,
+                        SetupRecurringPayment__c = srp ? 'Yes' : 'No',
+                        Status__c = NSWCPPOperation.STATUS_INITIATED
+                    )
+                );
+
+                requestIndex.add(index);
+            } else {
+                requestIndex.add(-1);
+            }
+
+            index++;
         }
 
         insert cpList;
 
-        List<Id> rv = new List<Id>();
         List<NSWCPPPaymentStep__c> cpsList = new List<NSWCPPPaymentStep__c>();
 
-        for (NSWCPPPayment__c item : cpList) {
+        for (Integer currentIndex : requestIndex) {
+            if (currentIndex < 0) {
+                rv.add(null);
+                continue;
+            }
+
+            NSWCPPPayment__c item = cpList.get(currentIndex);
             rv.add(item.Id);
 
             cpsList.add(

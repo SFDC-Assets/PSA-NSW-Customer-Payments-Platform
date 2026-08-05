@@ -3,15 +3,19 @@
  * @author E. Schweitzer
  */
 
-/* TODO: Security Review by Paul Lucas
-    The following would be executed by the guest user
-    as a continuation of the Apex Rest service NSWCPPServicePaymentCompletion 
+/*
+    The following could be executed by the guest user or unprivileged user
     The guest user cannot be granted any user access rights anyway.
     This is a narrow-band, very controlled operation.
+    Do not expose to the front-end, use only as a side-effect of back-end activity in an opaque way.
+    Only the payment reference is to be exposed to the end user (it's part of the HTTP redirect)
 */
 
 @SuppressWarnings('PMD.ApexCRUDViolation, PMD.AvoidGlobalModifier')
 global without sharing class NSWCPPOperationPend {
+    /**
+     * @description Request wrapper class for pend payment invocable method.
+     */
     public class Request {
         @InvocableVariable(label='Id' required=true)
         public Id id;
@@ -58,7 +62,13 @@ global without sharing class NSWCPPOperationPend {
         for (NSWCPPPayment__c item : cpList) {
             Request rq = rqMap.get(item.Id);
 
-            item.PaymentReference__c = rq.paymentReference;
+            if (rq.paymentReference == null || rq.paymentReference.length() > 255) {
+                // Skip it if payment reference is too long
+                continue;
+            }
+
+            // We ULREncode out of precaution but the callout logic does too
+            item.PaymentReference__c = EncodingUtil.urlEncode(rq.paymentReference, 'UTF-8');
             item.Status__c = NSWCPPOperation.STATUS_PENDING;
 
             cpsList.add(

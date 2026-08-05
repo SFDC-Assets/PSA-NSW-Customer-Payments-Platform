@@ -6,9 +6,10 @@
  * @author E. Schweitzer
  */
 
-/* TODO: Security Review by Paul Lucas
+/*
     The following would be executed by the guest user
     as a continuation of the Apex Rest service NSWCPPServicePaymentCompletion 
+    Unauthenticated call by the NSW CPP Gateway, but protected by checking a JWE.
     The guest user cannot be granted any user access rights anyway.
     This is a narrow-band, very controlled operation.
 */
