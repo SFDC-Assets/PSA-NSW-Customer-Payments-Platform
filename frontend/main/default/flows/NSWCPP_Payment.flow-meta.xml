@@ -12,10 +12,11 @@
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <nameSegment>NSWCPPClientUtilsGetUUID</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
+        <description>Here we decompose all the steps but in real life you may want to create a specific piece of Apex that does all the legwork and remove the @InvocableMethod notation from these individual actions to increase security.</description>
         <name>Initiate_Payment</name>
         <label>Initiate Payment</label>
         <locationX>182</locationX>
@@ -35,24 +36,24 @@
         <inputParameters>
             <name>amount</name>
             <value>
-                <elementReference>Amount</elementReference>
+                <elementReference>TotalPrice</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>customerReference</name>
             <value>
-                <elementReference>Customer_Reference</elementReference>
+                <elementReference>CustomerReference</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>productDescription</name>
             <value>
-                <elementReference>Product_Description</elementReference>
+                <elementReference>ProductDescription</elementReference>
             </value>
         </inputParameters>
         <nameSegment>NSWCPPOperationInitiate</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Mark_Payment_Pending</name>
@@ -84,7 +85,7 @@
             </value>
         </inputParameters>
         <nameSegment>NSWCPPOperationPend</nameSegment>
-        <versionSegment>1</versionSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>Request_Payment</name>
@@ -106,26 +107,67 @@
         <inputParameters>
             <name>amount</name>
             <value>
-                <elementReference>Amount</elementReference>
+                <elementReference>TotalPrice</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>customerReference</name>
             <value>
-                <elementReference>Customer_Reference</elementReference>
+                <elementReference>CustomerReference</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>productDescription</name>
             <value>
-                <elementReference>Product_Description</elementReference>
+                <elementReference>ProductDescription</elementReference>
             </value>
         </inputParameters>
         <nameSegment>NSWCPPCalloutRequestPayment</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <choices>
+        <name>QuantityOne</name>
+        <choiceText>1</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>1</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>QuantityThree</name>
+        <choiceText>3</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>3</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>QuantityTwo</name>
+        <choiceText>2</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>2</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ServiceIndividual</name>
+        <choiceText>Individual Paintball Licence</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Individual</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ServiceVenue</name>
+        <choiceText>Venue Paintball Licence</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Venue</stringValue>
+        </value>
+    </choices>
     <decisions>
         <name>Was_Payment_Req_Successful</name>
         <label>Was Payment Request Successful</label>
@@ -153,7 +195,46 @@
     </decisions>
     <description>Example payment flow using NSW CPP</description>
     <environments>Default</environments>
+    <formulas>
+        <name>CustomerReference</name>
+        <dataType>String</dataType>
+        <expression>IF((ISBLANK({!Customer_Reference}) || ISNULL({!Customer_Reference})), &quot;None&quot;, {!Customer_Reference})</expression>
+    </formulas>
+    <formulas>
+        <name>ProductDescription</name>
+        <dataType>String</dataType>
+        <expression>{!Quantity.selectedChoiceValues} &amp; &quot;x &quot; &amp; {!Service.selectedChoiceValues}</expression>
+    </formulas>
+    <formulas>
+        <name>QuantityN</name>
+        <dataType>Number</dataType>
+        <expression>VALUE({!QuantityS})</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>QuantityS</name>
+        <dataType>String</dataType>
+        <expression>{!Quantity.selectedChoiceValues}</expression>
+    </formulas>
+    <formulas>
+        <name>ServiceS</name>
+        <dataType>String</dataType>
+        <expression>{!Service.selectedChoiceLabels}</expression>
+    </formulas>
+    <formulas>
+        <name>TotalPrice</name>
+        <dataType>Currency</dataType>
+        <expression>{!QuantityN} * {!UnitPrice}</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>UnitPrice</name>
+        <dataType>Currency</dataType>
+        <expression>IF({!ServiceS} == {!ServiceIndividual}, 45.0, 750.0)</expression>
+        <scale>2</scale>
+    </formulas>
     <interviewLabel>NSWCPP Payment Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>NSWCPP Payment</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -197,10 +278,13 @@
         <locationY>782</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Redirect_to_NSW_CPP</targetReference>
+        </connector>
         <fields>
             <name>SuccessMessage</name>
-            <fieldText>&lt;p&gt;Payment has been Requested.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Payment Reference: &lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!Request_Payment.paymentReference}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Payment URL: &lt;a href=&quot;{!Request_Payment.nswCppPaymentURL}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;{!Request_Payment.nswCppPaymentURL}﻿&lt;/a&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;This information is for demo purposes only. In a normal scenario the user would move to the next screen directly.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Payment has been Requested.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Payment Reference: &lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!Request_Payment.paymentReference}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Payment URL: &lt;a href=&quot;{!Request_Payment.nswCppPaymentURL}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;{!Request_Payment.nswCppPaymentURL}﻿&lt;/a&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -222,6 +306,37 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Redirect_to_NSW_CPP</name>
+        <label>Redirect to NSW CPP</label>
+        <locationX>50</locationX>
+        <locationY>890</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Redirect</name>
+            <extensionName>c:nswCppFlowScreenRedirect</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>sameTab</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>targetUrl</name>
+                <value>
+                    <elementReference>Request_Payment.nswCppPaymentURL</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Try_Payment_Platform</name>
         <label>Try Payment Platform</label>
         <locationX>182</locationX>
@@ -234,7 +349,7 @@
         </connector>
         <fields>
             <name>IntroductionText</name>
-            <fieldText>&lt;h2&gt;Payment Example Flow&lt;/h2&gt;&lt;p&gt;In this sample flow, we let you set the customer reference, amount due and product description. In real life, the last two would be pre-set based on a selection the user made previously or e.g. on the content of a shopping cart.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;h2&gt;Payment Example Flow&lt;/h2&gt;&lt;p&gt;In this sample flow, we let you see the transactionId but you typically wouldn&apos;t in a real world scenario.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -252,13 +367,27 @@
             <isRequired>true</isRequired>
         </fields>
         <fields>
-            <name>Amount</name>
-            <dataType>Currency</dataType>
-            <fieldText>Amount</fieldText>
-            <fieldType>InputField</fieldType>
+            <name>Quantity</name>
+            <choiceReferences>QuantityOne</choiceReferences>
+            <choiceReferences>QuantityTwo</choiceReferences>
+            <choiceReferences>QuantityThree</choiceReferences>
+            <extensionName>flowruntime:choiceLookup</extensionName>
+            <fieldText>Quantity</fieldText>
+            <fieldType>ComponentChoice</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <scale>2</scale>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>Service</name>
+            <choiceReferences>ServiceIndividual</choiceReferences>
+            <choiceReferences>ServiceVenue</choiceReferences>
+            <extensionName>flowruntime:choiceLookup</extensionName>
+            <fieldText>Service</fieldText>
+            <fieldType>ComponentChoice</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
             <name>Customer_Reference</name>
@@ -267,14 +396,6 @@
             <fieldType>InputField</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
-        </fields>
-        <fields>
-            <name>Product_Description</name>
-            <dataType>String</dataType>
-            <fieldText>Product Description</fieldText>
-            <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -286,5 +407,5 @@
             <targetReference>Get_UUID</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>

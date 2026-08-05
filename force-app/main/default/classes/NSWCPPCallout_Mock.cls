@@ -27,11 +27,11 @@ public with sharing class NSWCPPCallout_Mock implements HttpCalloutMock {
 
         switch on type {
             when REQUESTPAYMENT_NODUP_OK {
-                rs.setBody('{"paymentReference": "GPP-DIG--fniMBvQTqugmPC3APGjXQ","duplicate": false}');
+                rs.setBody('{"paymentReference": "GPP-DIG--fniMBvQTqugmPC3APGjXQ", "duplicate": false}');
                 rs.setStatusCode(200);
             }
             when REQUESTPAYMENT_DUP_OK {
-                rs.setBody('{"paymentReference": "GPP-DIG--fniMBvQTqugmPC3APGjXQ","duplicate": true}');
+                rs.setBody('{"paymentReference": "GPP-DIG--fniMBvQTqugmPC3APGjXQ", "duplicate": true}');
                 rs.setStatusCode(200);
             }
             when REQUESTPAYMENT_KO_AGENCYNOTFOUND {
@@ -70,17 +70,17 @@ public with sharing class NSWCPPCallout_Mock implements HttpCalloutMock {
                     '"paymentStatus": "PAID",' +
                     '"referenceNumber": "N7NSAZMYGR",' +
                     '"agencyCompletionPayment": {' +
-                        '"paymentMethod":"CARD",' +
-                        '"paymentReference":"GPP-DIG-5YRG9-I9QWSSLnDeMb5UFA",' +
-                        '"paymentCompletionReference":"N7NSAZMYGR",' +
+                        '"paymentMethod": "CARD",' +
+                        '"paymentReference": "GPP-DIG-5YRG9-I9QWSSLnDeMb5UFA",' +
+                        '"paymentCompletionReference": "N7NSAZMYGR",' +
                         '"bankReference": "xxx",' +
                         '"amount": 123.45,' +
-                        '"surcharge: 1.23,' +
-                        '"surchargeGst: 0.12,' +
+                        '"surcharge": 1.23,' +
+                        '"surchargeGst": 0.12,' +
                         '"card": {' +
-                            '"cardType":"VISA",' +
-                            '"last4Digits":"1234"' +
-                        '},' +
+                            '"cardType": "VISA",' +
+                            '"last4Digits": "1234"' +
+                        '}' +
                     '},' +
                     '"isRefundable": true,' +
                     '"refundList": []' +
@@ -93,24 +93,24 @@ public with sharing class NSWCPPCallout_Mock implements HttpCalloutMock {
                     '"paymentStatus": "PAID",' +
                     '"referenceNumber": null,' +
                     '"agencyCompletionPayment": {' +
-                        '"paymentMethod":"CARD",' +
-                        '"paymentReference":"GPP-DIG-5YRG9-I9QWSSLnDeMb5UFA",' +
-                        '"paymentCompletionReference":"N7NSAZMYGR",' +
+                        '"paymentMethod": "CARD",' +
+                        '"paymentReference": "GPP-DIG-5YRG9-I9QWSSLnDeMb5UFA",' +
+                        '"paymentCompletionReference": "N7NSAZMYGR",' +
                         '"bankReference": "xxx",' +
                         '"amount": 123.45,' +
-                        '"surcharge: 1.23,' +
-                        '"surchargeGst: 0.12,' +
+                        '"surcharge": 1.23,' +
+                        '"surchargeGst": 0.12,' +
                         '"card": {' +
-                            '"cardType":"VISA",' +
-                            '"last4Digits":"1234"' +
-                        '},' +
+                            '"cardType": "VISA",' +
+                            '"last4Digits": "1234"' +
+                        '}' +
                     '},' +
                     '"isRefundable": true,' +
                     '"refundList": [{' +
-                        '"refundStatus":"REFUND_APPLIED",' +
-                        '"amount":23.45,' +
-                        '"refundReference":"N7NSAZMYGR",' +
-                        '"createdTimeStamp":"2024-01-01T02:00:00"' +
+                        '"refundStatus": "REFUND_APPLIED",' +
+                        '"amount": 23.45,' +
+                        '"refundReference": "N7NSAZMYGR",' +
+                        '"createdTimeStamp": "2024-01-01T02:00:00"' +
                     '}]' +
                 '}');
                 rs.setStatusCode(200);

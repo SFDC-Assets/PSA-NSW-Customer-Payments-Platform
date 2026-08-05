@@ -3,15 +3,19 @@
  * @author E. Schweitzer
  */
 
-/* TODO: Security Review by Paul Lucas
-    The following would be executed by the guest user
-    as a continuation of the Apex Rest service NSWCPPServicePaymentCompletion 
-    The guest user cannot be granted any user access rights anyway.
-    This is a narrow-band, very controlled operation.
+/* 
+    Allows to keep track of refunds, to be used after a refund has been processed on the NSW CPP Gateway.
+    Refunds must only be executed as part of very narrow, controlled scenarios.
+    Refund processes and securing them is not covered by the accelerator and his operation is provided as is. 
+    This Apex isn't part of any of our Permission Sets and should only be included after very
+    careful review of your refund scenarios.
 */
 
 @SuppressWarnings('PMD.ApexCRUDViolation, PMD.AvoidGlobalModifier')
 global without sharing class NSWCPPOperationRefund {
+    /**
+     * @description Request wrapper class for refund operations containing payment details and refund information.
+     */
     public class Request {
         @InvocableVariable(label='Id' required=true)
         public Id id;
@@ -63,6 +67,11 @@ global without sharing class NSWCPPOperationRefund {
         for (NSWCPPPayment__c item : cpList) {
             Request rq = rqMap.get(item.Id);
 
+            // Don't go ahead if there is no refund reference or if it's too long
+            if (rq.refundReference == NULL || rq.refundReference.length() > 255) {
+                continue;
+            }
+
             cpsList.add(
                 new NSWCPPPaymentStep__c(
                     Name = 'Refund',
@@ -107,12 +116,21 @@ global without sharing class NSWCPPOperationRefund {
     /**
       * @description Refunds a payment using a direct values
       * @param id Record Id of the completed payment to refund.
+      * @param amount Refund amount
+      * @param refundReason Refund reason
       * @param refundReference Refund reference issued by the payment gateway
       * @param duplicate value of the duplicate flag from the gateway
       * @param failureReason reason why the payment failed, or null when successful
       * @return Record Id of the associated payment step or null if there was no match.
       */
-    public static Id refundPayment(Id id, Decimal amount, String refundReason, String refundReference, Boolean duplicate, String failureReason) {
+    public static Id refundPayment(
+        Id id, 
+        Decimal amount, 
+        String refundReason, 
+        String refundReference, 
+        Boolean duplicate, 
+        String failureReason
+    ) {
         Request rq = new Request();
 
         rq.id = id;

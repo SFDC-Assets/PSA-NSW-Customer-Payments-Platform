@@ -1,10 +1,10 @@
-@isTest
+@IsTest
 private class NSWCPPOperationInitiate_Test {
     static String refForNumber(String stub, Integer i) {
         return stub + '_' + String.valueOf(i);
     }
 
-    @isTest
+    @IsTest
     static void mustInitiateOperationCorrectly() {
         final String stub = 'MyUniquePaymentReference_' + System.now().getTime();
         final Integer numberRecords = 5;
@@ -73,7 +73,7 @@ private class NSWCPPOperationInitiate_Test {
         }
     }
     
-    @isTest
+    @IsTest
     static void nullSrpShouldBeConvertedToNo() {
         Id rsId = NSWCPPOperationInitiate.initiatePayment(
 	        'nullSrpShouldBeConvertedToFalse',
@@ -98,4 +98,24 @@ private class NSWCPPOperationInitiate_Test {
         );
 
     }
+
+    @IsTest
+    static void shouldFailWithoNagativeAmount() {
+        Id rsId = NSWCPPOperationInitiate.initiatePayment(
+	        'nullSrpShouldBeConvertedToFalse',
+        	-1,
+            'SomeProduct',
+            'CustRef1',
+        	null,
+        	null
+        );
+        
+        System.assertEquals(
+            null,
+            rsId,
+            'Shoud have no recordId for negative payment.'
+        );
+
+    }
+
 }

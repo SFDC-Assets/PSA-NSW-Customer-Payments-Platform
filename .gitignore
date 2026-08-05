@@ -12,6 +12,9 @@ deploy-options.json
 # LWC VSCode autocomplete
 **/lwc/jsconfig.json
 
+# temp folder
+tmp/
+
 # LWC Jest coverage reports
 coverage/
 
